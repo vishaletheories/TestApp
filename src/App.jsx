@@ -58,7 +58,7 @@ export default function App() {
             <div className="logo-badge">
               <Layers size={20} />
             </div>
-            <span>ETH</span>
+            <span>RRA</span>
           </a>
           <ul className="nav-links">
             <li><a href="#features">Features</a></li>
@@ -92,7 +92,7 @@ export default function App() {
 
           <h1 className="hero-title">
             The Autonomous Engine for <br />
-            <span className="gradient-text">Modern Engineering Teams</span>
+            <span className="gradient-text">Modern Engineering Builds okay</span>
           </h1>
 
           <p className="hero-subtitle">
@@ -326,7 +326,7 @@ export default function App() {
               <div className="logo-badge">
                 <Layers size={18} />
               </div>
-              <span>ETH</span>
+              <span>RRA</span>
             </div>
             <ul className="footer-links">
               <li><a href="#features">Features</a></li>
@@ -335,7 +335,7 @@ export default function App() {
             </ul>
           </div>
           <div className="footer-bottom">
-            <p>&copy; {new Date().getFullYear()} ETH Engine. Built with Notion & Antigravity IDE.</p>
+            <p>&copy; {new Date().getFullYear()} RRA Engine. Built with Notion & Antigravity IDE.</p>
           </div>
         </div>
       </footer>
