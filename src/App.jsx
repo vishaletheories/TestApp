@@ -58,7 +58,7 @@ export default function App() {
             <div className="logo-badge">
               <Layers size={20} />
             </div>
-            <span>ETH</span>
+            <span>Test App</span>
           </a>
           <ul className="nav-links">
             <li><a href="#features">Features</a></li>
@@ -297,7 +297,7 @@ export default function App() {
               <div className="logo-badge">
                 <Layers size={18} />
               </div>
-              <span>ETH</span>
+              <span>Test App</span>
             </div>
             <ul className="footer-links">
               <li><a href="#features">Features</a></li>
@@ -306,7 +306,7 @@ export default function App() {
             </ul>
           </div>
           <div className="footer-bottom">
-            <p>&copy; {new Date().getFullYear()} ETH Engine. Built with Notion & Antigravity IDE.</p>
+            <p>&copy; {new Date().getFullYear()} Test App Engine. Built with Notion & Antigravity IDE.</p>
           </div>
         </div>
       </footer>
