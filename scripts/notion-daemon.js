@@ -45,7 +45,9 @@ function log(workerId, msg) {
 }
 
 function runCmd(cmd, cwd = rootDir) {
-  return execSync(cmd, { cwd, encoding: 'utf8', stdio: 'pipe' });
+  const nodeBin = path.join(rootDir, 'node_modules', '.bin');
+  const env = { ...process.env, PATH: `${nodeBin};${process.env.PATH}` };
+  return execSync(cmd, { cwd, encoding: 'utf8', stdio: 'pipe', env });
 }
 
 // 2. Query Notion for tickets with Status == "In progress" and empty GitHub PR
@@ -176,6 +178,64 @@ function applyCodeModifications(worktreeDir, ticket, requirements, workerId) {
       }
     }
   }
+
+  // Task Type 3: Fleet Info Cards Section
+  if (titleLower.includes('fleet') || reqLower.includes('fleet')) {
+    log(workerId, `✏️ Adding Fleet Info Cards section...`);
+    const appPath = path.join(worktreeDir, 'src', 'App.jsx');
+    if (fs.existsSync(appPath)) {
+      let app = fs.readFileSync(appPath, 'utf8');
+      if (!app.includes('id="fleet"')) {
+        const fleetSection = `
+      {/* Fleet Info Cards Section */}
+      <section className="features-section" id="fleet">
+        <div className="container">
+          <div className="section-header">
+            <span className="section-badge">Fleet Management</span>
+            <h2 className="section-title">Autonomous Fleet Overview</h2>
+            <p className="section-desc">Real-time status of all active deployed runner instances.</p>
+          </div>
+          <div className="features-grid">
+            <div className="feature-card">
+              <div className="feature-icon-wrapper icon-blue"><Cpu size={28} /></div>
+              <h3 className="feature-title">Runner Node Alpha</h3>
+              <p className="feature-desc">Status: Active | Latency: 12ms | CPU: 18%</p>
+            </div>
+            <div className="feature-card">
+              <div className="feature-icon-wrapper icon-purple"><Zap size={28} /></div>
+              <h3 className="feature-title">Runner Node Beta</h3>
+              <p className="feature-desc">Status: Active | Latency: 19ms | CPU: 24%</p>
+            </div>
+            <div className="feature-card">
+              <div className="feature-icon-wrapper icon-cyan"><ShieldCheck size={28} /></div>
+              <h3 className="feature-title">Security Sentinel</h3>
+              <p className="feature-desc">Status: Enforcing | Zero vulnerabilities detected</p>
+            </div>
+          </div>
+        </div>
+      </section>
+`;
+        app = app.replace('{/* Contact Form Section', `${fleetSection}\n      {/* Contact Form Section`);
+        fs.writeFileSync(appPath, app, 'utf8');
+      }
+    }
+  }
+}
+
+// Helper to safely sever junctions before removing worktrees (prevents Windows NTFS junction traversal bug)
+function safeRemoveWorktree(workerWorktree) {
+  try {
+    const workerNodeModules = path.join(workerWorktree, 'node_modules');
+    if (fs.existsSync(workerNodeModules)) {
+      try {
+        fs.unlinkSync(workerNodeModules);
+      } catch {
+        try { fs.rmdirSync(workerNodeModules); } catch {}
+      }
+    }
+    runCmd(`git worktree remove --force "${workerWorktree}"`);
+    runCmd('git worktree prune');
+  } catch {}
 }
 
 // 6. Parallel Worker Execution (Git Worktree Sandbox)
@@ -195,9 +255,9 @@ async function processTicketInParallelWorktree(ticket) {
       fs.mkdirSync(worktreesDir, { recursive: true });
     }
 
-    // B. Clean up any previous stale worktree for this worker
+    // B. Clean up any previous stale worktree for this worker safely
     if (fs.existsSync(workerWorktree)) {
-      try { runCmd(`git worktree remove --force "${workerWorktree}"`); } catch {}
+      safeRemoveWorktree(workerWorktree);
     }
 
     // C. Make sure we have latest develop refs
@@ -249,18 +309,12 @@ async function processTicketInParallelWorktree(ticket) {
     await updateNotionTicketDone(ticket.id, prUrl);
     log(workerId, `🎉 COMPLETE! Ticket "${ticket.name}" finished in parallel!`);
 
-    // L. Clean up isolated worktree
-    try {
-      runCmd(`git worktree remove --force "${workerWorktree}"`);
-      runCmd('git worktree prune');
-    } catch {}
+    // L. Clean up isolated worktree safely
+    safeRemoveWorktree(workerWorktree);
 
   } catch (err) {
     log(workerId, `❌ Worker failed for "${ticket.name}": ${err.message}`);
-    try {
-      runCmd(`git worktree remove --force "${workerWorktree}"`);
-      runCmd('git worktree prune');
-    } catch {}
+    safeRemoveWorktree(workerWorktree);
   } finally {
     activeTasks.delete(ticket.id);
   }
