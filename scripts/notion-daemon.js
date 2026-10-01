@@ -293,8 +293,11 @@ async function processTicketInParallelWorktree(ticket) {
     await updateNotionTicketDone(ticket.id, prUrl);
     log(workerId, `🎉 COMPLETE! Ticket "${ticket.name}" finished in parallel!`);
 
-    // L. Clean up isolated worktree
+    // L. Clean up isolated worktree safely
     try {
+      if (fs.existsSync(workerNodeModules)) {
+        try { fs.unlinkSync(workerNodeModules); } catch {}
+      }
       runCmd(`git worktree remove --force "${workerWorktree}"`);
       runCmd('git worktree prune');
     } catch {}
@@ -302,6 +305,9 @@ async function processTicketInParallelWorktree(ticket) {
   } catch (err) {
     log(workerId, `❌ Worker failed for "${ticket.name}": ${err.message}`);
     try {
+      if (fs.existsSync(workerNodeModules)) {
+        try { fs.unlinkSync(workerNodeModules); } catch {}
+      }
       runCmd(`git worktree remove --force "${workerWorktree}"`);
       runCmd('git worktree prune');
     } catch {}
