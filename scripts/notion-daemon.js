@@ -45,7 +45,9 @@ function log(workerId, msg) {
 }
 
 function runCmd(cmd, cwd = rootDir) {
-  return execSync(cmd, { cwd, encoding: 'utf8', stdio: 'pipe' });
+  const nodeBin = path.join(rootDir, 'node_modules', '.bin');
+  const env = { ...process.env, PATH: `${nodeBin};${process.env.PATH}` };
+  return execSync(cmd, { cwd, encoding: 'utf8', stdio: 'pipe', env });
 }
 
 // 2. Query Notion for tickets with Status == "In progress" and empty GitHub PR
