@@ -222,6 +222,22 @@ function applyCodeModifications(worktreeDir, ticket, requirements, workerId) {
   }
 }
 
+// Helper to safely sever junctions before removing worktrees (prevents Windows NTFS junction traversal bug)
+function safeRemoveWorktree(workerWorktree) {
+  try {
+    const workerNodeModules = path.join(workerWorktree, 'node_modules');
+    if (fs.existsSync(workerNodeModules)) {
+      try {
+        fs.unlinkSync(workerNodeModules);
+      } catch {
+        try { fs.rmdirSync(workerNodeModules); } catch {}
+      }
+    }
+    runCmd(`git worktree remove --force "${workerWorktree}"`);
+    runCmd('git worktree prune');
+  } catch {}
+}
+
 // 6. Parallel Worker Execution (Git Worktree Sandbox)
 async function processTicketInParallelWorktree(ticket) {
   const shortId = ticket.id.replace(/-/g, '').slice(0, 6);
@@ -239,9 +255,9 @@ async function processTicketInParallelWorktree(ticket) {
       fs.mkdirSync(worktreesDir, { recursive: true });
     }
 
-    // B. Clean up any previous stale worktree for this worker
+    // B. Clean up any previous stale worktree for this worker safely
     if (fs.existsSync(workerWorktree)) {
-      try { runCmd(`git worktree remove --force "${workerWorktree}"`); } catch {}
+      safeRemoveWorktree(workerWorktree);
     }
 
     // C. Make sure we have latest develop refs
@@ -294,23 +310,11 @@ async function processTicketInParallelWorktree(ticket) {
     log(workerId, `🎉 COMPLETE! Ticket "${ticket.name}" finished in parallel!`);
 
     // L. Clean up isolated worktree safely
-    try {
-      if (fs.existsSync(workerNodeModules)) {
-        try { fs.unlinkSync(workerNodeModules); } catch {}
-      }
-      runCmd(`git worktree remove --force "${workerWorktree}"`);
-      runCmd('git worktree prune');
-    } catch {}
+    safeRemoveWorktree(workerWorktree);
 
   } catch (err) {
     log(workerId, `❌ Worker failed for "${ticket.name}": ${err.message}`);
-    try {
-      if (fs.existsSync(workerNodeModules)) {
-        try { fs.unlinkSync(workerNodeModules); } catch {}
-      }
-      runCmd(`git worktree remove --force "${workerWorktree}"`);
-      runCmd('git worktree prune');
-    } catch {}
+    safeRemoveWorktree(workerWorktree);
   } finally {
     activeTasks.delete(ticket.id);
   }
