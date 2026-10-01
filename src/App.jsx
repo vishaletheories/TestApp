@@ -9,7 +9,10 @@ import {
   ExternalLink,
   Layers,
   Sun,
-  Moon
+  Moon,
+  Send,
+  CheckCircle2,
+  Mail
 } from 'lucide-react';
 
 export default function App() {
@@ -18,6 +21,10 @@ export default function App() {
     return localStorage.getItem('app-theme') || 'dark';
   });
 
+  const [contactForm, setContactForm] = useState({ name: '', email: '', message: '' });
+  const [formSubmitted, setFormSubmitted] = useState(false);
+  const [formSubmitting, setFormSubmitting] = useState(false);
+
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
     localStorage.setItem('app-theme', theme);
@@ -25,6 +32,17 @@ export default function App() {
 
   const toggleTheme = () => {
     setTheme(prev => (prev === 'dark' ? 'light' : 'dark'));
+  };
+
+  const handleContactSubmit = (e) => {
+    e.preventDefault();
+    if (!contactForm.name || !contactForm.email || !contactForm.message) return;
+    setFormSubmitting(true);
+    setTimeout(() => {
+      setFormSubmitting(false);
+      setFormSubmitted(true);
+      setContactForm({ name: '', email: '', message: '' });
+    }, 600);
   };
 
   return (
@@ -45,7 +63,7 @@ export default function App() {
           <ul className="nav-links">
             <li><a href="#features">Features</a></li>
             <li><a href="#preview">Platform</a></li>
-            <li><a href="#pricing">Docs</a></li>
+            <li><a href="#contact">Contact</a></li>
             <li><a href="https://github.com/vishaletheories/TestApp" target="_blank" rel="noreferrer">GitHub</a></li>
           </ul>
           <div className="nav-actions">
@@ -57,8 +75,8 @@ export default function App() {
             >
               {theme === 'dark' ? <Sun size={18} color="#f59e0b" /> : <Moon size={18} color="#6366f1" />}
             </button>
-            <a href="#features" className="nav-cta">
-              Get Started
+            <a href="#contact" className="nav-cta">
+              Get In Touch
             </a>
           </div>
         </div>
@@ -177,6 +195,100 @@ export default function App() {
         </div>
       </section>
 
+      {/* Contact Form Section (Notion Ticket: Add Simple Contact Form Section) */}
+      <section className="contact-section" id="contact">
+        <div className="container contact-wrapper">
+          <div className="section-header">
+            <span className="section-badge">Contact Us</span>
+            <h2 className="section-title">Send Us a Message</h2>
+            <p className="section-desc">
+              Have a question or looking to build with us? Fill out the form below.
+            </p>
+          </div>
+
+          <div className="contact-card">
+            {formSubmitted ? (
+              <div className="submit-success-box">
+                <CheckCircle2 size={32} color="#10b981" />
+                <div>
+                  <h4 style={{ fontWeight: 700, marginBottom: '4px', color: 'var(--text-main)' }}>
+                    Message Sent Successfully!
+                  </h4>
+                  <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>
+                    Thank you! Our engineering team will review your message and reply soon.
+                  </p>
+                  <button 
+                    onClick={() => setFormSubmitted(false)}
+                    style={{
+                      background: 'none',
+                      border: 'none',
+                      color: 'var(--primary)',
+                      cursor: 'pointer',
+                      fontWeight: 600,
+                      marginTop: '8px',
+                      padding: 0,
+                      textDecoration: 'underline'
+                    }}
+                  >
+                    Send another message
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <form className="contact-form" onSubmit={handleContactSubmit}>
+                <div className="form-group">
+                  <label className="form-label" htmlFor="contact-name">Full Name</label>
+                  <input 
+                    type="text" 
+                    id="contact-name" 
+                    className="form-input" 
+                    placeholder="Jane Doe"
+                    required
+                    value={contactForm.name}
+                    onChange={(e) => setContactForm({ ...contactForm, name: e.target.value })}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label className="form-label" htmlFor="contact-email">Email Address</label>
+                  <input 
+                    type="email" 
+                    id="contact-email" 
+                    className="form-input" 
+                    placeholder="jane@example.com"
+                    required
+                    value={contactForm.email}
+                    onChange={(e) => setContactForm({ ...contactForm, email: e.target.value })}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label className="form-label" htmlFor="contact-message">Message</label>
+                  <textarea 
+                    id="contact-message" 
+                    className="form-textarea" 
+                    placeholder="Tell us about your project requirements..."
+                    rows={4}
+                    required
+                    value={contactForm.message}
+                    onChange={(e) => setContactForm({ ...contactForm, message: e.target.value })}
+                  ></textarea>
+                </div>
+
+                <button 
+                  type="submit" 
+                  className="btn-submit"
+                  disabled={formSubmitting}
+                >
+                  <Send size={18} />
+                  <span>{formSubmitting ? "Sending..." : "Send Message"}</span>
+                </button>
+              </form>
+            )}
+          </div>
+        </div>
+      </section>
+
       {/* Footer */}
       <footer className="footer">
         <div className="container">
@@ -188,10 +300,9 @@ export default function App() {
               <span>NovaFlow</span>
             </div>
             <ul className="footer-links">
-              <li><a href="#">Architecture</a></li>
-              <li><a href="#">Roadmap</a></li>
+              <li><a href="#features">Features</a></li>
+              <li><a href="#contact">Contact</a></li>
               <li><a href="https://github.com/vishaletheories/TestApp" target="_blank" rel="noreferrer">GitHub</a></li>
-              <li><a href="#">Privacy</a></li>
             </ul>
           </div>
           <div className="footer-bottom">
@@ -202,3 +313,4 @@ export default function App() {
     </div>
   );
 }
+
