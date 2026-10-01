@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Zap, 
   Cpu, 
@@ -7,11 +7,25 @@ import {
   Sparkles, 
   Github, 
   ExternalLink,
-  Layers
+  Layers,
+  Sun,
+  Moon
 } from 'lucide-react';
 
 export default function App() {
   const [ctaClicked, setCtaClicked] = useState(false);
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem('app-theme') || 'dark';
+  });
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('app-theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(prev => (prev === 'dark' ? 'light' : 'dark'));
+  };
 
   return (
     <div className="app-wrapper">
@@ -34,9 +48,19 @@ export default function App() {
             <li><a href="#pricing">Docs</a></li>
             <li><a href="https://github.com/vishaletheories/TestApp" target="_blank" rel="noreferrer">GitHub</a></li>
           </ul>
-          <a href="#features" className="nav-cta">
-            Get Started
-          </a>
+          <div className="nav-actions">
+            <button 
+              className="theme-toggle-btn" 
+              onClick={toggleTheme} 
+              aria-label="Toggle theme"
+              title={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} mode`}
+            >
+              {theme === 'dark' ? <Sun size={18} color="#f59e0b" /> : <Moon size={18} color="#6366f1" />}
+            </button>
+            <a href="#features" className="nav-cta">
+              Get Started
+            </a>
+          </div>
         </div>
       </nav>
 
