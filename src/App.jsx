@@ -195,6 +195,35 @@ export default function App() {
         </div>
       </section>
 
+      
+      {/* Fleet Info Cards Section */}
+      <section className="features-section" id="fleet">
+        <div className="container">
+          <div className="section-header">
+            <span className="section-badge">Fleet Management</span>
+            <h2 className="section-title">Autonomous Fleet Overview</h2>
+            <p className="section-desc">Real-time status of all active deployed runner instances.</p>
+          </div>
+          <div className="features-grid">
+            <div className="feature-card">
+              <div className="feature-icon-wrapper icon-blue"><Cpu size={28} /></div>
+              <h3 className="feature-title">Runner Node Alpha</h3>
+              <p className="feature-desc">Status: Active | Latency: 12ms | CPU: 18%</p>
+            </div>
+            <div className="feature-card">
+              <div className="feature-icon-wrapper icon-purple"><Zap size={28} /></div>
+              <h3 className="feature-title">Runner Node Beta</h3>
+              <p className="feature-desc">Status: Active | Latency: 19ms | CPU: 24%</p>
+            </div>
+            <div className="feature-card">
+              <div className="feature-icon-wrapper icon-cyan"><ShieldCheck size={28} /></div>
+              <h3 className="feature-title">Security Sentinel</h3>
+              <p className="feature-desc">Status: Enforcing | Zero vulnerabilities detected</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Contact Form Section (Notion Ticket: Add Simple Contact Form Section) */}
       <section className="contact-section" id="contact">
         <div className="container contact-wrapper">
