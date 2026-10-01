@@ -177,6 +177,8 @@ function applyCodeModifications(worktreeDir, ticket, requirements, workerId) {
         fs.writeFileSync(cssPath, css, 'utf8');
       }
     }
+  }
+
   // Task Type 3: Fleet Info Cards Section
   if (titleLower.includes('fleet') || reqLower.includes('fleet')) {
     log(workerId, `✏️ Adding Fleet Info Cards section...`);
