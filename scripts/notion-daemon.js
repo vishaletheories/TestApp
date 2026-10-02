@@ -121,8 +121,37 @@ async function getTicketRequirements(pageId) {
   }
 }
 
-// 4. Update ticket in Notion (Set PR link and flip to Done)
-async function updateNotionTicketDone(pageId, prUrl) {
+// 4. Update ticket live progress remarks in Notion
+async function updateNotionTicketProgress(pageId, remarksText) {
+  try {
+    const res = await fetch(`https://api.notion.com/v1/pages/${pageId}`, {
+      method: 'PATCH',
+      headers: {
+        'Authorization': `Bearer ${NOTION_API_KEY}`,
+        'Notion-Version': '2022-06-28',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        properties: {
+          Remarks: {
+            rich_text: [
+              {
+                type: 'text',
+                text: { content: remarksText }
+              }
+            ]
+          }
+        }
+      })
+    });
+    return res.ok;
+  } catch {
+    return false;
+  }
+}
+
+// 5. Update ticket in Notion upon completion (Set PR link, Remarks, and flip to Done)
+async function updateNotionTicketDone(pageId, prUrl, remarksText = '✅ Complete: Build passed (0 errors) | PR Created') {
   try {
     const res = await fetch(`https://api.notion.com/v1/pages/${pageId}`, {
       method: 'PATCH',
@@ -134,7 +163,15 @@ async function updateNotionTicketDone(pageId, prUrl) {
       body: JSON.stringify({
         properties: {
           Status: { status: { name: 'Done' } },
-          'GitHub PR': { url: prUrl }
+          'GitHub PR': { url: prUrl },
+          Remarks: {
+            rich_text: [
+              {
+                type: 'text',
+                text: { content: remarksText }
+              }
+            ]
+          }
         }
       })
     });
@@ -302,6 +339,9 @@ async function processTicketInParallelWorktree(ticket) {
   log(workerId, `📌 Priority: ${ticket.priority} | Branch: ${branchName} | Sandbox: sandbox-${shortId}`);
 
   try {
+    // 0. Update Notion ticket Remarks immediately so team sees live execution status
+    await updateNotionTicketProgress(ticket.id, `⏳ [${workerId}] Execution started | Initializing sandbox...`);
+
     // A. Ensure worktrees directory exists
     if (!fs.existsSync(worktreesDir)) {
       fs.mkdirSync(worktreesDir, { recursive: true });
@@ -339,15 +379,18 @@ async function processTicketInParallelWorktree(ticket) {
 
     // G. Apply code changes inside isolated worktree
     log(workerId, `🔨 Applying code modifications in isolated worktree...`);
+    await updateNotionTicketProgress(ticket.id, `🔨 [${workerId}] Applying code modifications...`);
     applyCodeModifications(workerWorktree, ticket, requirements, workerId);
 
     // H. Validate build inside isolated worktree
     log(workerId, `🧪 Running production build verification in sandbox...`);
+    await updateNotionTicketProgress(ticket.id, `🧪 [${workerId}] Verifying production build...`);
     runCmd('npm run build', workerWorktree);
     log(workerId, `✅ Sandbox build passed with 0 errors!`);
 
     // I. Commit & Push to GitHub directly from worktree with diff-safety check
     log(workerId, `📤 Committing and pushing ${branchName} to GitHub...`);
+    await updateNotionTicketProgress(ticket.id, `📤 [${workerId}] Build passed (0 errors) | Pushing to GitHub...`);
     runCmd('git add .', workerWorktree);
     const gitStatus = runCmd('git status --porcelain', workerWorktree).trim();
     if (!gitStatus) {
@@ -362,9 +405,9 @@ async function processTicketInParallelWorktree(ticket) {
     const prUrl = `${GITHUB_REPO}/compare/develop...${branchName}?expand=1`;
     log(workerId, `🔗 Pull Request created: ${prUrl}`);
 
-    // K. Update Notion ticket to Done
+    // K. Update Notion ticket to Done with completion remarks
     log(workerId, `📝 Updating Notion ticket to 'Done'...`);
-    await updateNotionTicketDone(ticket.id, prUrl);
+    await updateNotionTicketDone(ticket.id, prUrl, `✅ [${workerId}] Build passed (0 errors) | PR Created`);
     log(workerId, `🎉 COMPLETE! Ticket "${ticket.name.trim()}" finished in parallel!`);
 
     // L. Clean up isolated worktree safely
@@ -372,6 +415,7 @@ async function processTicketInParallelWorktree(ticket) {
 
   } catch (err) {
     log(workerId, `❌ Worker failed for "${ticket.name.trim()}": ${err.message}`);
+    await updateNotionTicketProgress(ticket.id, `❌ [${workerId}] Failed: ${err.message.slice(0, 60)}`);
     safeRemoveWorktree(workerWorktree);
   } finally {
     activeTasks.delete(ticket.id);
