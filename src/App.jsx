@@ -92,7 +92,7 @@ export default function App() {
 
           <h1 className="hero-title">
             The Autonomous Engine for <br />
-            <span className="gradient-text">Modern Engineering Teams</span>
+            <span className="gradient-text">Modern Engineering Builds okay</span>
           </h1>
 
           <p className="hero-subtitle">
