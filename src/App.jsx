@@ -1,18 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { 
-  Zap, 
-  Cpu, 
-  ShieldCheck, 
-  ArrowRight, 
-  Sparkles, 
-  Github, 
-  ExternalLink,
+  Zap,
+  Cpu,
+  ShieldCheck,
+  ArrowRight,
+  Sparkles,
+  Github,
   Layers,
   Sun,
   Moon,
   Send,
-  CheckCircle2,
-  Mail
+  CheckCircle2
 } from 'lucide-react';
 
 export default function App() {
@@ -58,7 +56,7 @@ export default function App() {
             <div className="logo-badge">
               <Layers size={20} />
             </div>
-            <span>RRA</span>
+            <span>ETH</span>
           </a>
           <ul className="nav-links">
             <li><a href="#features">Features</a></li>
@@ -326,7 +324,7 @@ export default function App() {
               <div className="logo-badge">
                 <Layers size={18} />
               </div>
-              <span>RRA</span>
+              <span>ETH</span>
             </div>
             <ul className="footer-links">
               <li><a href="#features">Features</a></li>
@@ -335,7 +333,7 @@ export default function App() {
             </ul>
           </div>
           <div className="footer-bottom">
-            <p>&copy; {new Date().getFullYear()} RRA Engine. Built with Notion & Antigravity IDE.</p>
+            <p>&copy; {new Date().getFullYear()} ETH Engine. Built with Notion & Antigravity IDE.</p>
           </div>
         </div>
       </footer>
