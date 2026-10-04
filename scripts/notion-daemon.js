@@ -2,11 +2,15 @@ import fs from 'fs';
 import path from 'path';
 import { execSync } from 'child_process';
 import { fileURLToPath } from 'url';
+import { resolveTicketTarget, loadBrain } from './code-brain.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const rootDir = path.resolve(__dirname, '..');
 const worktreesDir = path.join(rootDir, '.worktrees');
+
+// Pre-load or initialize the Local Codebase AST Brain
+loadBrain();
 
 // 1. Load environment variables securely from .env
 function loadEnv() {
@@ -196,9 +200,12 @@ async function updateNotionTicketDone(pageId, prUrl, remarksText = '✅ Complete
 }
 
 // 5. Code modification engine per worker sandbox
-function applyCodeModifications(worktreeDir, ticket, requirements, workerId, modelName = 'Gemini 3.8 Flash') {
+function applyCodeModifications(worktreeDir, ticket, requirements, workerId, modelName = 'Gemini 3.8 Flash', brainTarget = {}) {
   const modelConfig = MODEL_CONFIGS[modelName] || { tier: 'Ultra-Fast', latency: 'Low' };
   log(workerId, `🤖 AI Engine Active: "${modelName}" [Tier: ${modelConfig.tier} | Latency: ${modelConfig.latency}]`);
+  if (brainTarget.found) {
+    log(workerId, `🎯 Surgical Targeting: Section "${brainTarget.sectionName}" (Lines ${brainTarget.startLine}-${brainTarget.endLine}) in ${brainTarget.targetFile}`);
+  }
   const titleLower = ticket.name.toLowerCase();
   const reqLower = requirements.toLowerCase();
   const fullText = `${ticket.name}\n${requirements}`;
@@ -514,12 +521,17 @@ async function processTicketInParallelWorktree(ticket) {
     // F. Fetch requirements from Notion
     const requirements = await getTicketRequirements(ticket.id);
 
-    // G. Apply code changes inside isolated worktree
+    // G. Query Local AST Brain to locate target section & files
+    const brainTarget = resolveTicketTarget(ticket.name, requirements);
+    log(workerId, `🧠 [Local AST Brain] Mapped to: ${brainTarget.targetFile} (Section: "${brainTarget.sectionName || 'General'}" | Lines: ${brainTarget.startLine || '1'}-${brainTarget.endLine || 'end'})`);
+    await updateNotionTicketProgress(ticket.id, `🧠 [${workerId} | ${modelName}] Brain Mapped: ${brainTarget.sectionName || 'General'}...`);
+
+    // H. Apply code changes inside isolated worktree
     log(workerId, `🔨 Applying code modifications in isolated worktree...`);
     await updateNotionTicketProgress(ticket.id, `🔨 [${workerId} | ${modelName}] Applying code modifications...`);
-    applyCodeModifications(workerWorktree, ticket, requirements, workerId, modelName);
+    applyCodeModifications(workerWorktree, ticket, requirements, workerId, modelName, brainTarget);
 
-    // H. Multi-Pass Guardrail Verification & Auto-Trim Loop
+    // I. Multi-Pass Guardrail Verification & Auto-Trim Loop
     await updateNotionTicketProgress(ticket.id, `🔍 [${workerId} | ${modelName}] Verifying guardrails & pruning bloat...`);
     const guardrailResult = validateGuardrailsAndSelfHeal(workerWorktree, ticket, requirements, workerId, modelName);
 

@@ -1,0 +1,1981 @@
+{
+  "version": "2026.9",
+  "generatedAt": "2026-10-04T18:31:48.379Z",
+  "project": "notion-react-landing",
+  "meta": {
+    "totalNodes": 15,
+    "totalEdges": 100,
+    "indexedConcepts": 90
+  },
+  "app": {
+    "file": "src/App.jsx",
+    "totalLines": 346,
+    "currentBrand": "RRA",
+    "imports": {
+      "lucide": [
+        "Zap",
+        "Cpu",
+        "ShieldCheck",
+        "ArrowRight",
+        "Sparkles",
+        "Github",
+        "ExternalLink",
+        "Layers",
+        "Sun",
+        "Moon",
+        "Send",
+        "CheckCircle2",
+        "Mail"
+      ]
+    },
+    "stateVariables": [
+      "ctaClicked",
+      "theme",
+      "contactForm",
+      "formSubmitted",
+      "formSubmitting"
+    ],
+    "sections": [
+      {
+        "id": "ambient-lighting-gradients",
+        "name": "Ambient Lighting Gradients",
+        "startLine": 50,
+        "endLine": 53,
+        "classes": [
+          "ambient-glow-1",
+          "ambient-glow-2"
+        ],
+        "iconsUsed": [],
+        "keySnippets": [
+          "{/* Ambient Lighting Gradients */}",
+          "<div className=\"ambient-glow-1\"></div>",
+          "<div className=\"ambient-glow-2\"></div>"
+        ]
+      },
+      {
+        "id": "navbar",
+        "name": "Navbar",
+        "startLine": 54,
+        "endLine": 84,
+        "classes": [
+          "navbar",
+          "container",
+          "nav-container",
+          "logo",
+          "logo-badge",
+          "nav-links",
+          "nav-actions",
+          "theme-toggle-btn",
+          "nav-cta"
+        ],
+        "iconsUsed": [
+          "Layers",
+          "Sun",
+          "Moon"
+        ],
+        "keySnippets": [
+          "{/* Navbar */}",
+          "<nav className=\"navbar\">",
+          "<div className=\"container nav-container\">",
+          "<a href=\"#\" className=\"logo\">",
+          "<div className=\"logo-badge\">"
+        ]
+      },
+      {
+        "id": "hero-section",
+        "name": "Hero Section",
+        "startLine": 85,
+        "endLine": 121,
+        "classes": [
+          "hero",
+          "container",
+          "hero-badge",
+          "hero-title",
+          "gradient-text",
+          "hero-subtitle",
+          "hero-actions",
+          "btn-primary",
+          "btn-secondary"
+        ],
+        "iconsUsed": [
+          "ArrowRight",
+          "Sparkles",
+          "Github"
+        ],
+        "keySnippets": [
+          "{/* Hero Section */}",
+          "<section className=\"hero\">",
+          "<div className=\"container\">",
+          "<div className=\"hero-badge\">",
+          "<Sparkles size={14} color=\"#818cf8\" />"
+        ]
+      },
+      {
+        "id": "preview",
+        "name": "Interactive Live Preview Box",
+        "startLine": 122,
+        "endLine": 149,
+        "classes": [
+          "hero-preview",
+          "preview-header",
+          "preview-dot",
+          "dot-red",
+          "dot-yellow",
+          "dot-green",
+          "preview-content",
+          "preview-stat",
+          "preview-number",
+          "preview-label"
+        ],
+        "iconsUsed": [],
+        "keySnippets": [
+          "{/* Interactive Live Preview Box */}",
+          "<div className=\"hero-preview\" id=\"preview\">",
+          "<div className=\"preview-header\">",
+          "<div className=\"preview-dot dot-red\"></div>",
+          "<div className=\"preview-dot dot-yellow\"></div>"
+        ]
+      },
+      {
+        "id": "features",
+        "name": "Features Section (3 cards matching Notion requirements)",
+        "startLine": 150,
+        "endLine": 161,
+        "classes": [
+          "features-section",
+          "container",
+          "section-header",
+          "section-badge",
+          "section-title",
+          "section-desc",
+          "features-grid"
+        ],
+        "iconsUsed": [],
+        "keySnippets": [
+          "{/* Features Section (3 cards matching Notion requirements) */}",
+          "<section className=\"features-section\" id=\"features\">",
+          "<div className=\"container\">",
+          "<div className=\"section-header\">",
+          "<span className=\"section-badge\">Core Capabilities</span>"
+        ]
+      },
+      {
+        "id": "card-1",
+        "name": "Card 1",
+        "startLine": 162,
+        "endLine": 172,
+        "classes": [
+          "feature-card",
+          "feature-icon-wrapper",
+          "icon-blue",
+          "feature-title",
+          "feature-desc"
+        ],
+        "iconsUsed": [
+          "Cpu"
+        ],
+        "keySnippets": [
+          "{/* Card 1 */}",
+          "<div className=\"feature-card\">",
+          "<div className=\"feature-icon-wrapper icon-blue\">",
+          "<Cpu size={28} />",
+          "</div>"
+        ]
+      },
+      {
+        "id": "card-2",
+        "name": "Card 2",
+        "startLine": 173,
+        "endLine": 183,
+        "classes": [
+          "feature-card",
+          "feature-icon-wrapper",
+          "icon-purple",
+          "feature-title",
+          "feature-desc"
+        ],
+        "iconsUsed": [
+          "Zap"
+        ],
+        "keySnippets": [
+          "{/* Card 2 */}",
+          "<div className=\"feature-card\">",
+          "<div className=\"feature-icon-wrapper icon-purple\">",
+          "<Zap size={28} />",
+          "</div>"
+        ]
+      },
+      {
+        "id": "card-3",
+        "name": "Card 3",
+        "startLine": 184,
+        "endLine": 198,
+        "classes": [
+          "feature-card",
+          "feature-icon-wrapper",
+          "icon-cyan",
+          "feature-title",
+          "feature-desc"
+        ],
+        "iconsUsed": [
+          "ShieldCheck"
+        ],
+        "keySnippets": [
+          "{/* Card 3 */}",
+          "<div className=\"feature-card\">",
+          "<div className=\"feature-icon-wrapper icon-cyan\">",
+          "<ShieldCheck size={28} />",
+          "</div>"
+        ]
+      },
+      {
+        "id": "fleet",
+        "name": "Fleet Info Cards Section",
+        "startLine": 199,
+        "endLine": 226,
+        "classes": [
+          "features-section",
+          "container",
+          "section-header",
+          "section-badge",
+          "section-title",
+          "section-desc",
+          "features-grid",
+          "feature-card",
+          "feature-icon-wrapper",
+          "icon-blue",
+          "feature-title",
+          "feature-desc",
+          "icon-purple",
+          "icon-cyan"
+        ],
+        "iconsUsed": [
+          "Zap",
+          "Cpu",
+          "ShieldCheck"
+        ],
+        "keySnippets": [
+          "{/* Fleet Info Cards Section */}",
+          "<section className=\"features-section\" id=\"fleet\">",
+          "<div className=\"container\">",
+          "<div className=\"section-header\">",
+          "<span className=\"section-badge\">Fleet Management</span>"
+        ]
+      },
+      {
+        "id": "contact",
+        "name": "Contact Form Section (Notion Ticket: Add Simple Contact Form Section)",
+        "startLine": 227,
+        "endLine": 320,
+        "classes": [
+          "contact-section",
+          "container",
+          "contact-wrapper",
+          "section-header",
+          "section-badge",
+          "section-title",
+          "section-desc",
+          "contact-card",
+          "submit-success-box",
+          "contact-form",
+          "form-group",
+          "form-label",
+          "form-input",
+          "form-textarea",
+          "btn-submit"
+        ],
+        "iconsUsed": [
+          "Send",
+          "CheckCircle2"
+        ],
+        "keySnippets": [
+          "{/* Contact Form Section (Notion Ticket: Add Simple Contact Form Section) */}",
+          "<section className=\"contact-section\" id=\"contact\">",
+          "<div className=\"container contact-wrapper\">",
+          "<div className=\"section-header\">",
+          "<span className=\"section-badge\">Contact Us</span>"
+        ]
+      },
+      {
+        "id": "footer",
+        "name": "Footer",
+        "startLine": 321,
+        "endLine": 346,
+        "classes": [
+          "footer",
+          "container",
+          "footer-content",
+          "logo",
+          "logo-badge",
+          "footer-links",
+          "footer-bottom"
+        ],
+        "iconsUsed": [
+          "Layers"
+        ],
+        "keySnippets": [
+          "{/* Footer */}",
+          "<footer className=\"footer\">",
+          "<div className=\"container\">",
+          "<div className=\"footer-content\">",
+          "<div className=\"logo\">"
+        ]
+      }
+    ]
+  },
+  "css": {
+    "file": "src/index.css",
+    "totalLines": 636,
+    "variablesCount": 32,
+    "classes": [
+      "gradient-text",
+      "navbar",
+      "footer",
+      "preview-stat",
+      "hero-preview",
+      "theme-toggle-btn",
+      "nav-actions",
+      "ambient-glow-1",
+      "ambient-glow-2",
+      "container",
+      "nav-container",
+      "logo",
+      "logo-badge",
+      "nav-links",
+      "nav-cta",
+      "hero",
+      "hero-badge",
+      "hero-title",
+      "hero-subtitle",
+      "hero-actions",
+      "btn-primary",
+      "btn-secondary",
+      "preview-header",
+      "preview-dot",
+      "dot-red",
+      "dot-yellow",
+      "dot-green",
+      "preview-content",
+      "preview-number",
+      "preview-label",
+      "features-section",
+      "section-header",
+      "section-badge",
+      "section-title",
+      "section-desc",
+      "features-grid",
+      "feature-card",
+      "feature-icon-wrapper",
+      "icon-purple",
+      "icon-blue",
+      "icon-cyan",
+      "feature-title",
+      "feature-desc",
+      "footer-content",
+      "footer-links",
+      "footer-bottom",
+      "contact-card",
+      "contact-section",
+      "contact-wrapper",
+      "contact-form",
+      "form-group",
+      "form-label",
+      "form-textarea",
+      "btn-submit",
+      "submit-success-box"
+    ],
+    "themes": [
+      "dark",
+      "light"
+    ]
+  },
+  "html": {
+    "file": "index.html",
+    "title": "RRA - Intelligent Workflow Engine"
+  },
+  "nodes": [
+    {
+      "id": "file:App.jsx",
+      "type": "file",
+      "path": "src/App.jsx"
+    },
+    {
+      "id": "file:index.css",
+      "type": "file",
+      "path": "src/index.css"
+    },
+    {
+      "id": "file:index.html",
+      "type": "file",
+      "path": "index.html"
+    },
+    {
+      "id": "brand:RRA",
+      "type": "brand",
+      "value": "RRA"
+    },
+    {
+      "id": "section:ambient-lighting-gradients",
+      "type": "component_section",
+      "name": "Ambient Lighting Gradients",
+      "startLine": 50,
+      "endLine": 53,
+      "classes": [
+        "ambient-glow-1",
+        "ambient-glow-2"
+      ],
+      "icons": []
+    },
+    {
+      "id": "section:navbar",
+      "type": "component_section",
+      "name": "Navbar",
+      "startLine": 54,
+      "endLine": 84,
+      "classes": [
+        "navbar",
+        "container",
+        "nav-container",
+        "logo",
+        "logo-badge",
+        "nav-links",
+        "nav-actions",
+        "theme-toggle-btn",
+        "nav-cta"
+      ],
+      "icons": [
+        "Layers",
+        "Sun",
+        "Moon"
+      ]
+    },
+    {
+      "id": "section:hero-section",
+      "type": "component_section",
+      "name": "Hero Section",
+      "startLine": 85,
+      "endLine": 121,
+      "classes": [
+        "hero",
+        "container",
+        "hero-badge",
+        "hero-title",
+        "gradient-text",
+        "hero-subtitle",
+        "hero-actions",
+        "btn-primary",
+        "btn-secondary"
+      ],
+      "icons": [
+        "ArrowRight",
+        "Sparkles",
+        "Github"
+      ]
+    },
+    {
+      "id": "section:preview",
+      "type": "component_section",
+      "name": "Interactive Live Preview Box",
+      "startLine": 122,
+      "endLine": 149,
+      "classes": [
+        "hero-preview",
+        "preview-header",
+        "preview-dot",
+        "dot-red",
+        "dot-yellow",
+        "dot-green",
+        "preview-content",
+        "preview-stat",
+        "preview-number",
+        "preview-label"
+      ],
+      "icons": []
+    },
+    {
+      "id": "section:features",
+      "type": "component_section",
+      "name": "Features Section (3 cards matching Notion requirements)",
+      "startLine": 150,
+      "endLine": 161,
+      "classes": [
+        "features-section",
+        "container",
+        "section-header",
+        "section-badge",
+        "section-title",
+        "section-desc",
+        "features-grid"
+      ],
+      "icons": []
+    },
+    {
+      "id": "section:card-1",
+      "type": "component_section",
+      "name": "Card 1",
+      "startLine": 162,
+      "endLine": 172,
+      "classes": [
+        "feature-card",
+        "feature-icon-wrapper",
+        "icon-blue",
+        "feature-title",
+        "feature-desc"
+      ],
+      "icons": [
+        "Cpu"
+      ]
+    },
+    {
+      "id": "section:card-2",
+      "type": "component_section",
+      "name": "Card 2",
+      "startLine": 173,
+      "endLine": 183,
+      "classes": [
+        "feature-card",
+        "feature-icon-wrapper",
+        "icon-purple",
+        "feature-title",
+        "feature-desc"
+      ],
+      "icons": [
+        "Zap"
+      ]
+    },
+    {
+      "id": "section:card-3",
+      "type": "component_section",
+      "name": "Card 3",
+      "startLine": 184,
+      "endLine": 198,
+      "classes": [
+        "feature-card",
+        "feature-icon-wrapper",
+        "icon-cyan",
+        "feature-title",
+        "feature-desc"
+      ],
+      "icons": [
+        "ShieldCheck"
+      ]
+    },
+    {
+      "id": "section:fleet",
+      "type": "component_section",
+      "name": "Fleet Info Cards Section",
+      "startLine": 199,
+      "endLine": 226,
+      "classes": [
+        "features-section",
+        "container",
+        "section-header",
+        "section-badge",
+        "section-title",
+        "section-desc",
+        "features-grid",
+        "feature-card",
+        "feature-icon-wrapper",
+        "icon-blue",
+        "feature-title",
+        "feature-desc",
+        "icon-purple",
+        "icon-cyan"
+      ],
+      "icons": [
+        "Zap",
+        "Cpu",
+        "ShieldCheck"
+      ]
+    },
+    {
+      "id": "section:contact",
+      "type": "component_section",
+      "name": "Contact Form Section (Notion Ticket: Add Simple Contact Form Section)",
+      "startLine": 227,
+      "endLine": 320,
+      "classes": [
+        "contact-section",
+        "container",
+        "contact-wrapper",
+        "section-header",
+        "section-badge",
+        "section-title",
+        "section-desc",
+        "contact-card",
+        "submit-success-box",
+        "contact-form",
+        "form-group",
+        "form-label",
+        "form-input",
+        "form-textarea",
+        "btn-submit"
+      ],
+      "icons": [
+        "Send",
+        "CheckCircle2"
+      ]
+    },
+    {
+      "id": "section:footer",
+      "type": "component_section",
+      "name": "Footer",
+      "startLine": 321,
+      "endLine": 346,
+      "classes": [
+        "footer",
+        "container",
+        "footer-content",
+        "logo",
+        "logo-badge",
+        "footer-links",
+        "footer-bottom"
+      ],
+      "icons": [
+        "Layers"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "file:App.jsx",
+      "to": "brand:RRA",
+      "relation": "defines_brand"
+    },
+    {
+      "from": "file:App.jsx",
+      "to": "section:ambient-lighting-gradients",
+      "relation": "contains_section"
+    },
+    {
+      "from": "section:ambient-lighting-gradients",
+      "to": "css:.ambient-glow-1",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:ambient-lighting-gradients",
+      "to": "css:.ambient-glow-2",
+      "relation": "styled_by"
+    },
+    {
+      "from": "file:App.jsx",
+      "to": "section:navbar",
+      "relation": "contains_section"
+    },
+    {
+      "from": "section:navbar",
+      "to": "css:.navbar",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:navbar",
+      "to": "css:.container",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:navbar",
+      "to": "css:.nav-container",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:navbar",
+      "to": "css:.logo",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:navbar",
+      "to": "css:.logo-badge",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:navbar",
+      "to": "css:.nav-links",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:navbar",
+      "to": "css:.nav-actions",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:navbar",
+      "to": "css:.theme-toggle-btn",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:navbar",
+      "to": "css:.nav-cta",
+      "relation": "styled_by"
+    },
+    {
+      "from": "file:App.jsx",
+      "to": "section:hero-section",
+      "relation": "contains_section"
+    },
+    {
+      "from": "section:hero-section",
+      "to": "css:.hero",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:hero-section",
+      "to": "css:.container",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:hero-section",
+      "to": "css:.hero-badge",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:hero-section",
+      "to": "css:.hero-title",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:hero-section",
+      "to": "css:.gradient-text",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:hero-section",
+      "to": "css:.hero-subtitle",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:hero-section",
+      "to": "css:.hero-actions",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:hero-section",
+      "to": "css:.btn-primary",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:hero-section",
+      "to": "css:.btn-secondary",
+      "relation": "styled_by"
+    },
+    {
+      "from": "file:App.jsx",
+      "to": "section:preview",
+      "relation": "contains_section"
+    },
+    {
+      "from": "section:preview",
+      "to": "css:.hero-preview",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:preview",
+      "to": "css:.preview-header",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:preview",
+      "to": "css:.preview-dot",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:preview",
+      "to": "css:.dot-red",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:preview",
+      "to": "css:.dot-yellow",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:preview",
+      "to": "css:.dot-green",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:preview",
+      "to": "css:.preview-content",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:preview",
+      "to": "css:.preview-stat",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:preview",
+      "to": "css:.preview-number",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:preview",
+      "to": "css:.preview-label",
+      "relation": "styled_by"
+    },
+    {
+      "from": "file:App.jsx",
+      "to": "section:features",
+      "relation": "contains_section"
+    },
+    {
+      "from": "section:features",
+      "to": "css:.features-section",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:features",
+      "to": "css:.container",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:features",
+      "to": "css:.section-header",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:features",
+      "to": "css:.section-badge",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:features",
+      "to": "css:.section-title",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:features",
+      "to": "css:.section-desc",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:features",
+      "to": "css:.features-grid",
+      "relation": "styled_by"
+    },
+    {
+      "from": "file:App.jsx",
+      "to": "section:card-1",
+      "relation": "contains_section"
+    },
+    {
+      "from": "section:card-1",
+      "to": "css:.feature-card",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:card-1",
+      "to": "css:.feature-icon-wrapper",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:card-1",
+      "to": "css:.icon-blue",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:card-1",
+      "to": "css:.feature-title",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:card-1",
+      "to": "css:.feature-desc",
+      "relation": "styled_by"
+    },
+    {
+      "from": "file:App.jsx",
+      "to": "section:card-2",
+      "relation": "contains_section"
+    },
+    {
+      "from": "section:card-2",
+      "to": "css:.feature-card",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:card-2",
+      "to": "css:.feature-icon-wrapper",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:card-2",
+      "to": "css:.icon-purple",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:card-2",
+      "to": "css:.feature-title",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:card-2",
+      "to": "css:.feature-desc",
+      "relation": "styled_by"
+    },
+    {
+      "from": "file:App.jsx",
+      "to": "section:card-3",
+      "relation": "contains_section"
+    },
+    {
+      "from": "section:card-3",
+      "to": "css:.feature-card",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:card-3",
+      "to": "css:.feature-icon-wrapper",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:card-3",
+      "to": "css:.icon-cyan",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:card-3",
+      "to": "css:.feature-title",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:card-3",
+      "to": "css:.feature-desc",
+      "relation": "styled_by"
+    },
+    {
+      "from": "file:App.jsx",
+      "to": "section:fleet",
+      "relation": "contains_section"
+    },
+    {
+      "from": "section:fleet",
+      "to": "css:.features-section",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:fleet",
+      "to": "css:.container",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:fleet",
+      "to": "css:.section-header",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:fleet",
+      "to": "css:.section-badge",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:fleet",
+      "to": "css:.section-title",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:fleet",
+      "to": "css:.section-desc",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:fleet",
+      "to": "css:.features-grid",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:fleet",
+      "to": "css:.feature-card",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:fleet",
+      "to": "css:.feature-icon-wrapper",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:fleet",
+      "to": "css:.icon-blue",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:fleet",
+      "to": "css:.feature-title",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:fleet",
+      "to": "css:.feature-desc",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:fleet",
+      "to": "css:.icon-purple",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:fleet",
+      "to": "css:.icon-cyan",
+      "relation": "styled_by"
+    },
+    {
+      "from": "file:App.jsx",
+      "to": "section:contact",
+      "relation": "contains_section"
+    },
+    {
+      "from": "section:contact",
+      "to": "css:.contact-section",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:contact",
+      "to": "css:.container",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:contact",
+      "to": "css:.contact-wrapper",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:contact",
+      "to": "css:.section-header",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:contact",
+      "to": "css:.section-badge",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:contact",
+      "to": "css:.section-title",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:contact",
+      "to": "css:.section-desc",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:contact",
+      "to": "css:.contact-card",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:contact",
+      "to": "css:.submit-success-box",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:contact",
+      "to": "css:.contact-form",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:contact",
+      "to": "css:.form-group",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:contact",
+      "to": "css:.form-label",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:contact",
+      "to": "css:.form-input",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:contact",
+      "to": "css:.form-textarea",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:contact",
+      "to": "css:.btn-submit",
+      "relation": "styled_by"
+    },
+    {
+      "from": "file:App.jsx",
+      "to": "section:footer",
+      "relation": "contains_section"
+    },
+    {
+      "from": "section:footer",
+      "to": "css:.footer",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:footer",
+      "to": "css:.container",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:footer",
+      "to": "css:.footer-content",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:footer",
+      "to": "css:.logo",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:footer",
+      "to": "css:.logo-badge",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:footer",
+      "to": "css:.footer-links",
+      "relation": "styled_by"
+    },
+    {
+      "from": "section:footer",
+      "to": "css:.footer-bottom",
+      "relation": "styled_by"
+    }
+  ],
+  "conceptIndex": {
+    "1": [
+      {
+        "targetNodeId": "section:card-1",
+        "startLine": 162,
+        "endLine": 172,
+        "file": "src/App.jsx"
+      }
+    ],
+    "2": [
+      {
+        "targetNodeId": "section:card-2",
+        "startLine": 173,
+        "endLine": 183,
+        "file": "src/App.jsx"
+      }
+    ],
+    "3": [
+      {
+        "targetNodeId": "section:card-3",
+        "startLine": 184,
+        "endLine": 198,
+        "file": "src/App.jsx"
+      }
+    ],
+    "brand": [
+      {
+        "targetNodeId": "brand:RRA",
+        "file": "src/App.jsx"
+      }
+    ],
+    "logo": [
+      {
+        "targetNodeId": "brand:RRA",
+        "file": "src/App.jsx"
+      },
+      {
+        "targetNodeId": "section:navbar",
+        "file": "src/index.css"
+      },
+      {
+        "targetNodeId": "section:footer",
+        "file": "src/index.css"
+      }
+    ],
+    "rra": [
+      {
+        "targetNodeId": "brand:RRA",
+        "file": "src/App.jsx"
+      }
+    ],
+    "ambient": [
+      {
+        "targetNodeId": "section:ambient-lighting-gradients",
+        "startLine": 50,
+        "endLine": 53,
+        "file": "src/App.jsx"
+      }
+    ],
+    "lighting": [
+      {
+        "targetNodeId": "section:ambient-lighting-gradients",
+        "startLine": 50,
+        "endLine": 53,
+        "file": "src/App.jsx"
+      }
+    ],
+    "gradients": [
+      {
+        "targetNodeId": "section:ambient-lighting-gradients",
+        "startLine": 50,
+        "endLine": 53,
+        "file": "src/App.jsx"
+      }
+    ],
+    "ambient-lighting-gradients": [
+      {
+        "targetNodeId": "section:ambient-lighting-gradients",
+        "startLine": 50,
+        "endLine": 53,
+        "file": "src/App.jsx"
+      }
+    ],
+    "ambient-glow-1": [
+      {
+        "targetNodeId": "section:ambient-lighting-gradients",
+        "file": "src/index.css"
+      }
+    ],
+    "ambient-glow-2": [
+      {
+        "targetNodeId": "section:ambient-lighting-gradients",
+        "file": "src/index.css"
+      }
+    ],
+    "navbar": [
+      {
+        "targetNodeId": "section:navbar",
+        "startLine": 54,
+        "endLine": 84,
+        "file": "src/App.jsx"
+      },
+      {
+        "targetNodeId": "section:navbar",
+        "startLine": 54,
+        "endLine": 84,
+        "file": "src/App.jsx"
+      },
+      {
+        "targetNodeId": "section:navbar",
+        "file": "src/index.css"
+      }
+    ],
+    "container": [
+      {
+        "targetNodeId": "section:navbar",
+        "file": "src/index.css"
+      },
+      {
+        "targetNodeId": "section:hero-section",
+        "file": "src/index.css"
+      },
+      {
+        "targetNodeId": "section:features",
+        "file": "src/index.css"
+      },
+      {
+        "targetNodeId": "section:fleet",
+        "file": "src/index.css"
+      },
+      {
+        "targetNodeId": "section:contact",
+        "file": "src/index.css"
+      },
+      {
+        "targetNodeId": "section:footer",
+        "file": "src/index.css"
+      }
+    ],
+    "nav-container": [
+      {
+        "targetNodeId": "section:navbar",
+        "file": "src/index.css"
+      }
+    ],
+    "logo-badge": [
+      {
+        "targetNodeId": "section:navbar",
+        "file": "src/index.css"
+      },
+      {
+        "targetNodeId": "section:footer",
+        "file": "src/index.css"
+      }
+    ],
+    "nav-links": [
+      {
+        "targetNodeId": "section:navbar",
+        "file": "src/index.css"
+      }
+    ],
+    "nav-actions": [
+      {
+        "targetNodeId": "section:navbar",
+        "file": "src/index.css"
+      }
+    ],
+    "theme-toggle-btn": [
+      {
+        "targetNodeId": "section:navbar",
+        "file": "src/index.css"
+      }
+    ],
+    "nav-cta": [
+      {
+        "targetNodeId": "section:navbar",
+        "file": "src/index.css"
+      }
+    ],
+    "hero": [
+      {
+        "targetNodeId": "section:hero-section",
+        "startLine": 85,
+        "endLine": 121,
+        "file": "src/App.jsx"
+      },
+      {
+        "targetNodeId": "section:hero-section",
+        "file": "src/index.css"
+      }
+    ],
+    "section": [
+      {
+        "targetNodeId": "section:hero-section",
+        "startLine": 85,
+        "endLine": 121,
+        "file": "src/App.jsx"
+      },
+      {
+        "targetNodeId": "section:features",
+        "startLine": 150,
+        "endLine": 161,
+        "file": "src/App.jsx"
+      },
+      {
+        "targetNodeId": "section:fleet",
+        "startLine": 199,
+        "endLine": 226,
+        "file": "src/App.jsx"
+      },
+      {
+        "targetNodeId": "section:contact",
+        "startLine": 227,
+        "endLine": 320,
+        "file": "src/App.jsx"
+      }
+    ],
+    "hero-section": [
+      {
+        "targetNodeId": "section:hero-section",
+        "startLine": 85,
+        "endLine": 121,
+        "file": "src/App.jsx"
+      }
+    ],
+    "hero-badge": [
+      {
+        "targetNodeId": "section:hero-section",
+        "file": "src/index.css"
+      }
+    ],
+    "hero-title": [
+      {
+        "targetNodeId": "section:hero-section",
+        "file": "src/index.css"
+      }
+    ],
+    "gradient-text": [
+      {
+        "targetNodeId": "section:hero-section",
+        "file": "src/index.css"
+      }
+    ],
+    "hero-subtitle": [
+      {
+        "targetNodeId": "section:hero-section",
+        "file": "src/index.css"
+      }
+    ],
+    "hero-actions": [
+      {
+        "targetNodeId": "section:hero-section",
+        "file": "src/index.css"
+      }
+    ],
+    "btn-primary": [
+      {
+        "targetNodeId": "section:hero-section",
+        "file": "src/index.css"
+      }
+    ],
+    "btn-secondary": [
+      {
+        "targetNodeId": "section:hero-section",
+        "file": "src/index.css"
+      }
+    ],
+    "interactive": [
+      {
+        "targetNodeId": "section:preview",
+        "startLine": 122,
+        "endLine": 149,
+        "file": "src/App.jsx"
+      }
+    ],
+    "live": [
+      {
+        "targetNodeId": "section:preview",
+        "startLine": 122,
+        "endLine": 149,
+        "file": "src/App.jsx"
+      }
+    ],
+    "preview": [
+      {
+        "targetNodeId": "section:preview",
+        "startLine": 122,
+        "endLine": 149,
+        "file": "src/App.jsx"
+      },
+      {
+        "targetNodeId": "section:preview",
+        "startLine": 122,
+        "endLine": 149,
+        "file": "src/App.jsx"
+      }
+    ],
+    "box": [
+      {
+        "targetNodeId": "section:preview",
+        "startLine": 122,
+        "endLine": 149,
+        "file": "src/App.jsx"
+      }
+    ],
+    "hero-preview": [
+      {
+        "targetNodeId": "section:preview",
+        "file": "src/index.css"
+      }
+    ],
+    "preview-header": [
+      {
+        "targetNodeId": "section:preview",
+        "file": "src/index.css"
+      }
+    ],
+    "preview-dot": [
+      {
+        "targetNodeId": "section:preview",
+        "file": "src/index.css"
+      }
+    ],
+    "dot-red": [
+      {
+        "targetNodeId": "section:preview",
+        "file": "src/index.css"
+      }
+    ],
+    "dot-yellow": [
+      {
+        "targetNodeId": "section:preview",
+        "file": "src/index.css"
+      }
+    ],
+    "dot-green": [
+      {
+        "targetNodeId": "section:preview",
+        "file": "src/index.css"
+      }
+    ],
+    "preview-content": [
+      {
+        "targetNodeId": "section:preview",
+        "file": "src/index.css"
+      }
+    ],
+    "preview-stat": [
+      {
+        "targetNodeId": "section:preview",
+        "file": "src/index.css"
+      }
+    ],
+    "preview-number": [
+      {
+        "targetNodeId": "section:preview",
+        "file": "src/index.css"
+      }
+    ],
+    "preview-label": [
+      {
+        "targetNodeId": "section:preview",
+        "file": "src/index.css"
+      }
+    ],
+    "features": [
+      {
+        "targetNodeId": "section:features",
+        "startLine": 150,
+        "endLine": 161,
+        "file": "src/App.jsx"
+      },
+      {
+        "targetNodeId": "section:features",
+        "startLine": 150,
+        "endLine": 161,
+        "file": "src/App.jsx"
+      }
+    ],
+    "(3": [
+      {
+        "targetNodeId": "section:features",
+        "startLine": 150,
+        "endLine": 161,
+        "file": "src/App.jsx"
+      }
+    ],
+    "cards": [
+      {
+        "targetNodeId": "section:features",
+        "startLine": 150,
+        "endLine": 161,
+        "file": "src/App.jsx"
+      },
+      {
+        "targetNodeId": "section:fleet",
+        "startLine": 199,
+        "endLine": 226,
+        "file": "src/App.jsx"
+      }
+    ],
+    "matching": [
+      {
+        "targetNodeId": "section:features",
+        "startLine": 150,
+        "endLine": 161,
+        "file": "src/App.jsx"
+      }
+    ],
+    "notion": [
+      {
+        "targetNodeId": "section:features",
+        "startLine": 150,
+        "endLine": 161,
+        "file": "src/App.jsx"
+      }
+    ],
+    "requirements)": [
+      {
+        "targetNodeId": "section:features",
+        "startLine": 150,
+        "endLine": 161,
+        "file": "src/App.jsx"
+      }
+    ],
+    "features-section": [
+      {
+        "targetNodeId": "section:features",
+        "file": "src/index.css"
+      },
+      {
+        "targetNodeId": "section:fleet",
+        "file": "src/index.css"
+      }
+    ],
+    "section-header": [
+      {
+        "targetNodeId": "section:features",
+        "file": "src/index.css"
+      },
+      {
+        "targetNodeId": "section:fleet",
+        "file": "src/index.css"
+      },
+      {
+        "targetNodeId": "section:contact",
+        "file": "src/index.css"
+      }
+    ],
+    "section-badge": [
+      {
+        "targetNodeId": "section:features",
+        "file": "src/index.css"
+      },
+      {
+        "targetNodeId": "section:fleet",
+        "file": "src/index.css"
+      },
+      {
+        "targetNodeId": "section:contact",
+        "file": "src/index.css"
+      }
+    ],
+    "section-title": [
+      {
+        "targetNodeId": "section:features",
+        "file": "src/index.css"
+      },
+      {
+        "targetNodeId": "section:fleet",
+        "file": "src/index.css"
+      },
+      {
+        "targetNodeId": "section:contact",
+        "file": "src/index.css"
+      }
+    ],
+    "section-desc": [
+      {
+        "targetNodeId": "section:features",
+        "file": "src/index.css"
+      },
+      {
+        "targetNodeId": "section:fleet",
+        "file": "src/index.css"
+      },
+      {
+        "targetNodeId": "section:contact",
+        "file": "src/index.css"
+      }
+    ],
+    "features-grid": [
+      {
+        "targetNodeId": "section:features",
+        "file": "src/index.css"
+      },
+      {
+        "targetNodeId": "section:fleet",
+        "file": "src/index.css"
+      }
+    ],
+    "card": [
+      {
+        "targetNodeId": "section:card-1",
+        "startLine": 162,
+        "endLine": 172,
+        "file": "src/App.jsx"
+      },
+      {
+        "targetNodeId": "section:card-2",
+        "startLine": 173,
+        "endLine": 183,
+        "file": "src/App.jsx"
+      },
+      {
+        "targetNodeId": "section:card-3",
+        "startLine": 184,
+        "endLine": 198,
+        "file": "src/App.jsx"
+      }
+    ],
+    "card-1": [
+      {
+        "targetNodeId": "section:card-1",
+        "startLine": 162,
+        "endLine": 172,
+        "file": "src/App.jsx"
+      }
+    ],
+    "feature-card": [
+      {
+        "targetNodeId": "section:card-1",
+        "file": "src/index.css"
+      },
+      {
+        "targetNodeId": "section:card-2",
+        "file": "src/index.css"
+      },
+      {
+        "targetNodeId": "section:card-3",
+        "file": "src/index.css"
+      },
+      {
+        "targetNodeId": "section:fleet",
+        "file": "src/index.css"
+      }
+    ],
+    "feature-icon-wrapper": [
+      {
+        "targetNodeId": "section:card-1",
+        "file": "src/index.css"
+      },
+      {
+        "targetNodeId": "section:card-2",
+        "file": "src/index.css"
+      },
+      {
+        "targetNodeId": "section:card-3",
+        "file": "src/index.css"
+      },
+      {
+        "targetNodeId": "section:fleet",
+        "file": "src/index.css"
+      }
+    ],
+    "icon-blue": [
+      {
+        "targetNodeId": "section:card-1",
+        "file": "src/index.css"
+      },
+      {
+        "targetNodeId": "section:fleet",
+        "file": "src/index.css"
+      }
+    ],
+    "feature-title": [
+      {
+        "targetNodeId": "section:card-1",
+        "file": "src/index.css"
+      },
+      {
+        "targetNodeId": "section:card-2",
+        "file": "src/index.css"
+      },
+      {
+        "targetNodeId": "section:card-3",
+        "file": "src/index.css"
+      },
+      {
+        "targetNodeId": "section:fleet",
+        "file": "src/index.css"
+      }
+    ],
+    "feature-desc": [
+      {
+        "targetNodeId": "section:card-1",
+        "file": "src/index.css"
+      },
+      {
+        "targetNodeId": "section:card-2",
+        "file": "src/index.css"
+      },
+      {
+        "targetNodeId": "section:card-3",
+        "file": "src/index.css"
+      },
+      {
+        "targetNodeId": "section:fleet",
+        "file": "src/index.css"
+      }
+    ],
+    "card-2": [
+      {
+        "targetNodeId": "section:card-2",
+        "startLine": 173,
+        "endLine": 183,
+        "file": "src/App.jsx"
+      }
+    ],
+    "icon-purple": [
+      {
+        "targetNodeId": "section:card-2",
+        "file": "src/index.css"
+      },
+      {
+        "targetNodeId": "section:fleet",
+        "file": "src/index.css"
+      }
+    ],
+    "card-3": [
+      {
+        "targetNodeId": "section:card-3",
+        "startLine": 184,
+        "endLine": 198,
+        "file": "src/App.jsx"
+      }
+    ],
+    "icon-cyan": [
+      {
+        "targetNodeId": "section:card-3",
+        "file": "src/index.css"
+      },
+      {
+        "targetNodeId": "section:fleet",
+        "file": "src/index.css"
+      }
+    ],
+    "fleet": [
+      {
+        "targetNodeId": "section:fleet",
+        "startLine": 199,
+        "endLine": 226,
+        "file": "src/App.jsx"
+      },
+      {
+        "targetNodeId": "section:fleet",
+        "startLine": 199,
+        "endLine": 226,
+        "file": "src/App.jsx"
+      }
+    ],
+    "info": [
+      {
+        "targetNodeId": "section:fleet",
+        "startLine": 199,
+        "endLine": 226,
+        "file": "src/App.jsx"
+      }
+    ],
+    "contact": [
+      {
+        "targetNodeId": "section:contact",
+        "startLine": 227,
+        "endLine": 320,
+        "file": "src/App.jsx"
+      },
+      {
+        "targetNodeId": "section:contact",
+        "startLine": 227,
+        "endLine": 320,
+        "file": "src/App.jsx"
+      },
+      {
+        "targetNodeId": "section:contact",
+        "startLine": 227,
+        "endLine": 320,
+        "file": "src/App.jsx"
+      }
+    ],
+    "form": [
+      {
+        "targetNodeId": "section:contact",
+        "startLine": 227,
+        "endLine": 320,
+        "file": "src/App.jsx"
+      },
+      {
+        "targetNodeId": "section:contact",
+        "startLine": 227,
+        "endLine": 320,
+        "file": "src/App.jsx"
+      }
+    ],
+    "(notion": [
+      {
+        "targetNodeId": "section:contact",
+        "startLine": 227,
+        "endLine": 320,
+        "file": "src/App.jsx"
+      }
+    ],
+    "ticket:": [
+      {
+        "targetNodeId": "section:contact",
+        "startLine": 227,
+        "endLine": 320,
+        "file": "src/App.jsx"
+      }
+    ],
+    "add": [
+      {
+        "targetNodeId": "section:contact",
+        "startLine": 227,
+        "endLine": 320,
+        "file": "src/App.jsx"
+      }
+    ],
+    "simple": [
+      {
+        "targetNodeId": "section:contact",
+        "startLine": 227,
+        "endLine": 320,
+        "file": "src/App.jsx"
+      }
+    ],
+    "section)": [
+      {
+        "targetNodeId": "section:contact",
+        "startLine": 227,
+        "endLine": 320,
+        "file": "src/App.jsx"
+      }
+    ],
+    "contact-section": [
+      {
+        "targetNodeId": "section:contact",
+        "file": "src/index.css"
+      }
+    ],
+    "contact-wrapper": [
+      {
+        "targetNodeId": "section:contact",
+        "file": "src/index.css"
+      }
+    ],
+    "contact-card": [
+      {
+        "targetNodeId": "section:contact",
+        "file": "src/index.css"
+      }
+    ],
+    "submit-success-box": [
+      {
+        "targetNodeId": "section:contact",
+        "file": "src/index.css"
+      }
+    ],
+    "contact-form": [
+      {
+        "targetNodeId": "section:contact",
+        "file": "src/index.css"
+      }
+    ],
+    "form-group": [
+      {
+        "targetNodeId": "section:contact",
+        "file": "src/index.css"
+      }
+    ],
+    "form-label": [
+      {
+        "targetNodeId": "section:contact",
+        "file": "src/index.css"
+      }
+    ],
+    "form-input": [
+      {
+        "targetNodeId": "section:contact",
+        "file": "src/index.css"
+      }
+    ],
+    "form-textarea": [
+      {
+        "targetNodeId": "section:contact",
+        "file": "src/index.css"
+      }
+    ],
+    "btn-submit": [
+      {
+        "targetNodeId": "section:contact",
+        "file": "src/index.css"
+      }
+    ],
+    "footer": [
+      {
+        "targetNodeId": "section:footer",
+        "startLine": 321,
+        "endLine": 346,
+        "file": "src/App.jsx"
+      },
+      {
+        "targetNodeId": "section:footer",
+        "startLine": 321,
+        "endLine": 346,
+        "file": "src/App.jsx"
+      },
+      {
+        "targetNodeId": "section:footer",
+        "file": "src/index.css"
+      }
+    ],
+    "footer-content": [
+      {
+        "targetNodeId": "section:footer",
+        "file": "src/index.css"
+      }
+    ],
+    "footer-links": [
+      {
+        "targetNodeId": "section:footer",
+        "file": "src/index.css"
+      }
+    ],
+    "footer-bottom": [
+      {
+        "targetNodeId": "section:footer",
+        "file": "src/index.css"
+      }
+    ]
+  }
+}

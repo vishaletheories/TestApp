@@ -1,0 +1,33 @@
+{
+  "version": "2026.9",
+  "designSystem": {
+    "framework": "React + Vanilla CSS",
+    "themeSupport": [
+      "dark",
+      "light"
+    ],
+    "iconLibrary": "lucide-react",
+    "rootElement": "#root"
+  },
+  "codeConventions": [
+    "Use surgical element replacement instead of full file rewrites",
+    "Never duplicate lucide-react icon imports if already present",
+    "Reuse existing .features-grid and .feature-card classes for card layouts",
+    "Always preserve state variables (theme, contactForm) in src/App.jsx",
+    "Production build must pass with 0 errors via npm run build"
+  ],
+  "lastIndexedBrand": "RRA",
+  "lastIndexedSections": [
+    "Ambient Lighting Gradients",
+    "Navbar",
+    "Hero Section",
+    "Interactive Live Preview Box",
+    "Features Section (3 cards matching Notion requirements)",
+    "Card 1",
+    "Card 2",
+    "Card 3",
+    "Fleet Info Cards Section",
+    "Contact Form Section (Notion Ticket: Add Simple Contact Form Section)",
+    "Footer"
+  ]
+}

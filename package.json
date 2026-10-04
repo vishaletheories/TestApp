@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "daemon": "node scripts/notion-daemon.js"
+    "daemon": "node scripts/notion-daemon.js",
+    "brain:build": "node scripts/build-brain.js"
   },
   "dependencies": {
     "react": "^18.3.1",
