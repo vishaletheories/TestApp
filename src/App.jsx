@@ -1,18 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { 
-  Zap, 
-  Cpu, 
-  ShieldCheck, 
-  ArrowRight, 
-  Sparkles, 
-  Github, 
-  ExternalLink,
+  Zap,
+  Cpu,
+  ShieldCheck,
+  ArrowRight,
+  Sparkles,
+  Github,
   Layers,
   Sun,
   Moon,
   Send,
-  CheckCircle2,
-  Mail
+  CheckCircle2
 } from 'lucide-react';
 
 export default function App() {

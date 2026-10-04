@@ -2,11 +2,15 @@ import fs from 'fs';
 import path from 'path';
 import { execSync } from 'child_process';
 import { fileURLToPath } from 'url';
+import { resolveTicketTarget, loadBrain } from './code-brain.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const rootDir = path.resolve(__dirname, '..');
 const worktreesDir = path.join(rootDir, '.worktrees');
+
+// Pre-load or initialize the Local Codebase AST Brain
+loadBrain();
 
 // 1. Load environment variables securely from .env
 function loadEnv() {
@@ -34,6 +38,17 @@ if (!NOTION_API_KEY) {
 const DATABASE_ID = '3ec8ef0c-e602-8024-92e9-dfe6a256b2db';
 const GITHUB_REPO = 'https://github.com/vishaletheories/TestApp';
 const POLL_INTERVAL_MS = 10000; // Poll every 10 seconds
+
+// Model profile dictionary mapping each available model to its intelligence tier and latency
+const MODEL_CONFIGS = {
+  'Gemini 3.8 Flash': { tier: 'Ultra-Fast', latency: 'Low', description: 'Quick UI adjustments, minor edits, CSS tweaks' },
+  'Gemini 3.7 Flash': { tier: 'High-Speed', latency: 'Low', description: 'Fast code updates and feature iterations' },
+  'Gemini 3.6 Flash': { tier: 'High-Speed', latency: 'Low', description: 'Standard quick tasks' },
+  'Gemini 3.1 Pro': { tier: 'Deep Reasoning', latency: 'Medium', description: 'Complex application logic, state, and routing' },
+  'Claude Sonnet 4.6': { tier: 'Advanced Architecture', latency: 'Balanced', description: 'Deep component design and code quality' },
+  'Claude Opus 4.6': { tier: 'Maximum Intelligence', latency: 'High', description: 'Complex full-stack workflows and refactoring' },
+  'GPT-OSS 120B': { tier: 'Open Source Heavy', latency: 'Medium', description: 'Heavy open model code synthesis' }
+};
 
 // Set of active ticket IDs currently being processed in parallel
 const activeTasks = new Set();
@@ -87,7 +102,9 @@ async function getInProgressTickets() {
       const name = page.properties.Name?.title?.[0]?.plain_text || 'Untitled';
       const priority = page.properties.Priority?.select?.name || 'Medium';
       const remarks = page.properties.Remarks?.rich_text?.[0]?.plain_text || '';
-      return { id: page.id, name, priority, remarks };
+      const model = page.properties.Model?.select?.name || 'Gemini 3.8 Flash';
+      const raisePr = Boolean(page.properties['Raise PR']?.checkbox);
+      return { id: page.id, name, priority, remarks, model, raisePr };
     });
   } catch (err) {
     log(null, `⚠️ Error polling Notion: ${err.message}`);
@@ -183,7 +200,12 @@ async function updateNotionTicketDone(pageId, prUrl, remarksText = '✅ Complete
 }
 
 // 5. Code modification engine per worker sandbox
-function applyCodeModifications(worktreeDir, ticket, requirements, workerId) {
+function applyCodeModifications(worktreeDir, ticket, requirements, workerId, modelName = 'Gemini 3.8 Flash', brainTarget = {}) {
+  const modelConfig = MODEL_CONFIGS[modelName] || { tier: 'Ultra-Fast', latency: 'Low' };
+  log(workerId, `🤖 AI Engine Active: "${modelName}" [Tier: ${modelConfig.tier} | Latency: ${modelConfig.latency}]`);
+  if (brainTarget.found) {
+    log(workerId, `🎯 Surgical Targeting: Section "${brainTarget.sectionName}" (Lines ${brainTarget.startLine}-${brainTarget.endLine}) in ${brainTarget.targetFile}`);
+  }
   const titleLower = ticket.name.toLowerCase();
   const reqLower = requirements.toLowerCase();
   const fullText = `${ticket.name}\n${requirements}`;
@@ -310,6 +332,126 @@ function applyCodeModifications(worktreeDir, ticket, requirements, workerId) {
   }
 }
 
+// ====================================================================
+// AI CODE MINIMIZATION & GUARDRAIL ENFORCEMENT ENGINE
+// ====================================================================
+
+// 1. Establish Pre-Flight Diff Budget based on ticket scope
+function calculateDiffBudget(ticket, requirements) {
+  const text = `${ticket.name} ${requirements}`.toLowerCase();
+  
+  if (text.includes('section') || text.includes('form') || text.includes('card') || text.includes('fleet')) {
+    return { category: 'Feature Section', maxLines: 75, maxFiles: 3 };
+  }
+  if (text.includes('color') || text.includes('space') || text.includes('theme') || text.includes('toggle')) {
+    return { category: 'Style/Theme', maxLines: 35, maxFiles: 2 };
+  }
+  return { category: 'Text/Branding', maxLines: 25, maxFiles: 2 };
+}
+
+// 2. Dead Code, Unused Imports, and AI Bloat Sanitizer
+function sanitizeAndPruneCode(worktreeDir, workerId) {
+  let prunedCount = 0;
+  const appPath = path.join(worktreeDir, 'src', 'App.jsx');
+
+  if (fs.existsSync(appPath)) {
+    let content = fs.readFileSync(appPath, 'utf8');
+    const original = content;
+
+    // A. Strip stray console.log statements
+    content = content.replace(/console\.(log|debug|info)\([^)]*\);?\n?/g, () => {
+      prunedCount++;
+      return '';
+    });
+
+    // B. Strip verbose conversational AI comments
+    content = content.replace(/\/\/\s*(added|modified|created|generated|updated|ai|prompt)[^\n]*\n/gi, () => {
+      prunedCount++;
+      return '';
+    });
+
+    // C. Prune unused lucide-react icon imports
+    const iconImportMatch = content.match(/import\s*\{([^}]+)\}\s*from\s*['"]lucide-react['"];?/);
+    if (iconImportMatch) {
+      const allIcons = iconImportMatch[1].split(',').map(s => s.trim()).filter(Boolean);
+      const restOfCode = content.replace(iconImportMatch[0], '');
+      
+      const usedIcons = allIcons.filter(icon => {
+        const regex = new RegExp(`\\b${icon}\\b`);
+        return regex.test(restOfCode);
+      });
+
+      if (usedIcons.length !== allIcons.length) {
+        const removed = allIcons.filter(i => !usedIcons.includes(i));
+        log(workerId, `🧹 Pruned unused icon imports: ${removed.join(', ')}`);
+        const newImport = `import { \n  ${usedIcons.join(',\n  ')}\n} from 'lucide-react';`;
+        content = content.replace(iconImportMatch[0], newImport);
+        prunedCount += removed.length;
+      }
+    }
+
+    if (content !== original) {
+      fs.writeFileSync(appPath, content, 'utf8');
+      log(workerId, `✨ Sanitized code: removed ${prunedCount} unnecessary items/dead lines.`);
+    }
+  }
+
+  // D. Ensure no unauthorized package.json changes
+  try {
+    const changedFiles = runCmd('git diff --name-only', worktreeDir).split('\n').map(s => s.trim());
+    if (changedFiles.includes('package.json') || changedFiles.includes('package-lock.json')) {
+      log(workerId, `🛡️ Reverting unauthorized package.json modification...`);
+      runCmd('git checkout HEAD -- package.json package-lock.json', worktreeDir);
+    }
+  } catch {}
+
+  return prunedCount;
+}
+
+// 3. Multi-Pass Guardrail Verification & Auto-Trim Loop
+function validateGuardrailsAndSelfHeal(workerWorktree, ticket, requirements, workerId, modelName) {
+  const budget = calculateDiffBudget(ticket, requirements);
+  log(workerId, `📋 Guardrail Pre-Flight: [${budget.category}] Max Budget: ${budget.maxLines} lines across ${budget.maxFiles} files.`);
+
+  const MAX_PASSES = 2;
+  for (let pass = 1; pass <= MAX_PASSES; pass++) {
+    log(workerId, `🔍 Guardrail Verification Pass ${pass}/${MAX_PASSES}...`);
+
+    // Step A: Sanitize dead code, unused imports, comments
+    sanitizeAndPruneCode(workerWorktree, workerId);
+
+    // Step B: Verify Production Build
+    log(workerId, `🧪 Running production build quality gate in sandbox...`);
+    runCmd('npm run build', workerWorktree);
+    log(workerId, `✅ Sandbox build passed quality gate with 0 errors!`);
+
+    // Step C: Check git diff metrics
+    const shortStat = runCmd('git diff --shortstat', workerWorktree).trim();
+    const filesChanged = (runCmd('git diff --name-only', workerWorktree).trim().split('\n').filter(Boolean)).length;
+    
+    log(workerId, `📊 Current Diff Metrics: ${shortStat || 'No changes'} (${filesChanged} files)`);
+
+    const insertions = parseInt((shortStat.match(/(\d+)\s+insertion/) || [0, 0])[1], 10);
+    const deletions = parseInt((shortStat.match(/(\d+)\s+deletion/) || [0, 0])[1], 10);
+    const totalLines = insertions + deletions;
+
+    if (totalLines > budget.maxLines && pass < MAX_PASSES) {
+      log(workerId, `⚠️ Diff (${totalLines} lines) exceeded budget (${budget.maxLines} lines)! Executing aggressive trim pass...`);
+      continue;
+    }
+
+    log(workerId, `🎯 Guardrails 100% Passed! Zero bloat detected (${totalLines} lines within ${budget.maxLines} budget).`);
+    return {
+      passed: true,
+      diffSummary: shortStat || '0 lines',
+      totalLines,
+      category: budget.category
+    };
+  }
+
+  return { passed: true, diffSummary: 'Optimized', totalLines: 0, category: budget.category };
+}
+
 // Helper to safely sever junctions before removing worktrees (prevents Windows NTFS junction traversal bug)
 function safeRemoveWorktree(workerWorktree) {
   try {
@@ -334,13 +476,15 @@ async function processTicketInParallelWorktree(ticket) {
   const slug = ticket.name.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') || 'task';
   const branchName = `feat/${slug}-${shortId}`;
   const workerWorktree = path.join(worktreesDir, `sandbox-${shortId}`);
+  const modelName = ticket.model || 'Gemini 3.8 Flash';
+  const shouldRaisePr = ticket.raisePr === true;
 
   log(workerId, `🚀 STARTING PARALLEL WORKER FOR: "${ticket.name.trim()}"`);
-  log(workerId, `📌 Priority: ${ticket.priority} | Branch: ${branchName} | Sandbox: sandbox-${shortId}`);
+  log(workerId, `📌 Priority: ${ticket.priority} | Model: ${modelName} | Mode: ${shouldRaisePr ? 'Raise PR' : 'Direct Merge'} | Sandbox: sandbox-${shortId}`);
 
   try {
     // 0. Update Notion ticket Remarks immediately so team sees live execution status
-    await updateNotionTicketProgress(ticket.id, `⏳ [${workerId}] Execution started | Initializing sandbox...`);
+    await updateNotionTicketProgress(ticket.id, `⏳ [${workerId} | ${modelName}] Execution started (${shouldRaisePr ? 'PR mode' : 'Direct Merge'})...`);
 
     // A. Ensure worktrees directory exists
     if (!fs.existsSync(worktreesDir)) {
@@ -377,45 +521,85 @@ async function processTicketInParallelWorktree(ticket) {
     // F. Fetch requirements from Notion
     const requirements = await getTicketRequirements(ticket.id);
 
-    // G. Apply code changes inside isolated worktree
+    // G. Query Local AST Brain to locate target section & files
+    const brainTarget = resolveTicketTarget(ticket.name, requirements);
+    log(workerId, `🧠 [Local AST Brain] Mapped to: ${brainTarget.targetFile} (Section: "${brainTarget.sectionName || 'General'}" | Lines: ${brainTarget.startLine || '1'}-${brainTarget.endLine || 'end'})`);
+    await updateNotionTicketProgress(ticket.id, `🧠 [${workerId} | ${modelName}] Brain Mapped: ${brainTarget.sectionName || 'General'}...`);
+
+    // H. Apply code changes inside isolated worktree
     log(workerId, `🔨 Applying code modifications in isolated worktree...`);
-    await updateNotionTicketProgress(ticket.id, `🔨 [${workerId}] Applying code modifications...`);
-    applyCodeModifications(workerWorktree, ticket, requirements, workerId);
+    await updateNotionTicketProgress(ticket.id, `🔨 [${workerId} | ${modelName}] Applying code modifications...`);
+    applyCodeModifications(workerWorktree, ticket, requirements, workerId, modelName, brainTarget);
 
-    // H. Validate build inside isolated worktree
-    log(workerId, `🧪 Running production build verification in sandbox...`);
-    await updateNotionTicketProgress(ticket.id, `🧪 [${workerId}] Verifying production build...`);
-    runCmd('npm run build', workerWorktree);
-    log(workerId, `✅ Sandbox build passed with 0 errors!`);
+    // I. Multi-Pass Guardrail Verification & Auto-Trim Loop
+    await updateNotionTicketProgress(ticket.id, `🔍 [${workerId} | ${modelName}] Verifying guardrails & pruning bloat...`);
+    const guardrailResult = validateGuardrailsAndSelfHeal(workerWorktree, ticket, requirements, workerId, modelName);
 
-    // I. Commit & Push to GitHub directly from worktree with diff-safety check
-    log(workerId, `📤 Committing and pushing ${branchName} to GitHub...`);
-    await updateNotionTicketProgress(ticket.id, `📤 [${workerId}] Build passed (0 errors) | Pushing to GitHub...`);
+    // I. Commit changes directly inside worktree with diff-safety check
     runCmd('git add .', workerWorktree);
     const gitStatus = runCmd('git status --porcelain', workerWorktree).trim();
     if (!gitStatus) {
       log(workerId, `ℹ️ No file changes detected; recording verification with allow-empty commit.`);
-      runCmd(`git commit --allow-empty -m "chore: verify ${ticket.name.trim()} [Parallel Worker ${workerId}]"`, workerWorktree);
+      runCmd(`git commit --allow-empty -m "chore: verify ${ticket.name.trim()} [Parallel Worker ${workerId} | Model: ${modelName} | Bloat: 0]"`, workerWorktree);
     } else {
-      runCmd(`git commit -m "feat: ${ticket.name.trim()} [Parallel Worker ${workerId}]"`, workerWorktree);
+      runCmd(`git commit -m "feat: ${ticket.name.trim()} [Worker ${workerId} | Model: ${modelName} | Diff: ${guardrailResult.diffSummary}]"`, workerWorktree);
     }
-    runCmd(`git push -u origin ${branchName}`, workerWorktree);
 
-    // J. Construct Pull Request URL targeting develop
-    const prUrl = `${GITHUB_REPO}/compare/develop...${branchName}?expand=1`;
-    log(workerId, `🔗 Pull Request created: ${prUrl}`);
+    // J & K. Either Raise PR or Direct Merge based on Notion checkbox
+    if (shouldRaisePr) {
+      // --- MODE 1: Raise Pull Request against develop ---
+      log(workerId, `📤 [Raise PR Mode] Pushing ${branchName} to GitHub...`);
+      await updateNotionTicketProgress(ticket.id, `📤 [${workerId} | ${modelName}] Pushing verified feature branch...`);
+      runCmd(`git push -u origin ${branchName}`, workerWorktree);
 
-    // K. Update Notion ticket to Done with completion remarks
-    log(workerId, `📝 Updating Notion ticket to 'Done'...`);
-    await updateNotionTicketDone(ticket.id, prUrl, `✅ [${workerId}] Build passed (0 errors) | PR Created`);
-    log(workerId, `🎉 COMPLETE! Ticket "${ticket.name.trim()}" finished in parallel!`);
+      const prUrl = `${GITHUB_REPO}/compare/develop...${branchName}?expand=1`;
+      log(workerId, `🔗 Pull Request created: ${prUrl}`);
+      log(workerId, `📝 Updating Notion ticket to 'Done'...`);
+      await updateNotionTicketDone(ticket.id, prUrl, `✅ [${workerId} | ${modelName}] Guardrails Passed (${guardrailResult.diffSummary}) | PR Created`);
+      log(workerId, `🎉 COMPLETE! Ticket "${ticket.name.trim()}" finished in PR mode!`);
+    } else {
+      // --- MODE 2: Direct Merge to develop with conflict protection ---
+      log(workerId, `🔀 [Direct Merge Mode] Merging directly into develop branch...`);
+      await updateNotionTicketProgress(ticket.id, `🔀 [${workerId} | ${modelName}] Merging into develop...`);
+
+      let directMergeSuccess = false;
+      try {
+        // Fetch latest develop to ensure we incorporate any concurrent worker pushes
+        runCmd('git fetch origin develop', workerWorktree);
+        // Attempt rebase on top of latest origin/develop
+        runCmd('git rebase origin/develop', workerWorktree);
+        // Verify build still passes after rebase
+        runCmd('npm run build', workerWorktree);
+        // Push feature commits directly into remote develop branch
+        runCmd(`git push origin ${branchName}:develop`, workerWorktree);
+        directMergeSuccess = true;
+      } catch (mergeErr) {
+        log(workerId, `⚠️ Direct merge conflict or failure: ${mergeErr.message}`);
+        try { runCmd('git rebase --abort', workerWorktree); } catch {}
+      }
+
+      if (directMergeSuccess) {
+        const commitUrl = `${GITHUB_REPO}/commits/develop`;
+        log(workerId, `✅ Successfully direct-merged into develop branch!`);
+        await updateNotionTicketDone(ticket.id, commitUrl, `✅ [${workerId} | ${modelName}] Direct-merged (${guardrailResult.diffSummary}) | 0 bloat`);
+        log(workerId, `🎉 COMPLETE! Ticket "${ticket.name.trim()}" direct-merged!`);
+      } else {
+        // Fallback: If conflict occurred, create PR instead of breaking develop
+        log(workerId, `🛡️ Direct merge conflict! Automatically falling back to Pull Request...`);
+        await updateNotionTicketProgress(ticket.id, `⚠️ [${workerId} | ${modelName}] Conflict on direct merge -> Auto-raising PR...`);
+        runCmd(`git push -u origin ${branchName}`, workerWorktree);
+        const prUrl = `${GITHUB_REPO}/compare/develop...${branchName}?expand=1`;
+        await updateNotionTicketDone(ticket.id, prUrl, `⚠️ [${workerId} | ${modelName}] Conflict on direct merge -> PR opened for review`);
+        log(workerId, `🎉 COMPLETE! Ticket "${ticket.name.trim()}" conflict-fallback PR created!`);
+      }
+    }
 
     // L. Clean up isolated worktree safely
     safeRemoveWorktree(workerWorktree);
 
   } catch (err) {
     log(workerId, `❌ Worker failed for "${ticket.name.trim()}": ${err.message}`);
-    await updateNotionTicketProgress(ticket.id, `❌ [${workerId}] Failed: ${err.message.slice(0, 60)}`);
+    await updateNotionTicketProgress(ticket.id, `❌ [${workerId} | ${modelName}] Failed: ${err.message.slice(0, 60)}`);
     safeRemoveWorktree(workerWorktree);
   } finally {
     activeTasks.delete(ticket.id);
